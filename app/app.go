@@ -17,12 +17,16 @@ func init() {
 }
 
 // service method
-func (app App) Run() {
-
+func (app *App) Init() {
 	app.r = gin.Default()
+}
 
-	// route service
-	route.UserRoutes(app.r)
-
-	app.r.Run("localhost:8080")
+func (app *App) Run() {
+	if app.r != nil {
+		// route service
+		route.UserRoutes(app.r)
+		app.r.Run("localhost:8080")
+	} else {
+		panic("gin engine is not available")
+	}
 }

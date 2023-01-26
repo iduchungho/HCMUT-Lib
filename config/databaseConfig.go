@@ -10,7 +10,9 @@ import (
 
 	"example/hcmut-lib/pkg/model"
 )
-
+// type Database struct {
+// 	DB *gorm.DB
+// }
 var DB *gorm.DB
 
 func creteSchema(db *gorm.DB) {
@@ -18,7 +20,7 @@ func creteSchema(db *gorm.DB) {
 	db.AutoMigrate(&model.Document{})
 }
 
-func DatabaseConection() {
+func  DatabaseConection() {
 	errEnv := godotenv.Load()
 	if errEnv != nil {
 		panic("failed to load env file")

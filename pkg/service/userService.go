@@ -1,4 +1,5 @@
 package service
+
 /*
  * @Author : Duc Hung Ho
  * @Description : Service for user controllers
@@ -11,6 +12,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 )
+
 func GetAllUser(c *gin.Context, obj *[]model.User) ([]model.User, error) {
 	if err := config.DB.Find(&obj).Error; err != nil {
 		return *obj, err
@@ -36,10 +38,20 @@ func UpdateUserByID(c *gin.Context, obj *model.User, id string) (model.User, err
 	return user, nil
 }
 
-func DeleteUserByID(c *gin.Context, obj *model.User, id string) {
-
+func DeleteUserByID(c *gin.Context, obj *model.User, id string) (error) {
+	if err := config.DB.Where("id_account = ?", id).Delete(&obj).Error; err != nil {
+		return err
+	}
+	return nil
 }
 
-func CreateUser(c *gin.Context, obj *model.User) {
-
+func CreateUser(c *gin.Context, obj *model.User) (model.User, error){
+	var newUser model.User
+	if err := c.BindJSON(&newUser); err != nil {
+		return *obj, err
+	}
+	if err := config.DB.Create(&newUser).Error; err != nil {
+		return *obj, err
+	}
+	return newUser, nil
 }

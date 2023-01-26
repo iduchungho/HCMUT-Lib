@@ -1,10 +1,10 @@
 package main
 
 import (
-	"example/hcmut-lib/app"
+	"example/hcmut-lib/global"
 )
 
 func main() {
-	a := app.App{}; // create a new application
-	a.Run()			// run the application
+	global.G_App.Init()
+	global.G_App.Run()
 }
